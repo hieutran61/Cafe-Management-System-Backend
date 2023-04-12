@@ -7,6 +7,8 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.io.Serializable;
 
+@NamedQuery(name = "User.getAllAdminEmail", query = "SELECT u.email from User u WHERE u.role='admin'")
+
 @Data
 @Entity
 @DynamicUpdate
