@@ -1,6 +1,7 @@
 package com.hieutran.cafe.serviceImpl;
 
 import com.hieutran.cafe.DAO.ProductDAO;
+import com.hieutran.cafe.DTO.ProductDTO;
 import com.hieutran.cafe.JWT.JwtFilter;
 import com.hieutran.cafe.constants.CafeConstants;
 import com.hieutran.cafe.model.Category;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -40,7 +43,15 @@ public class ProductServiceImpl implements IProductService {
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
+    @Override
+    public ResponseEntity<List<ProductDTO>> getAllProduct() {
+        try {
+            return new ResponseEntity<>(productDAO.getAllProduct(), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 
     /*==================================================================================================
