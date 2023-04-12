@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements IProductService {
@@ -51,6 +52,29 @@ public class ProductServiceImpl implements IProductService {
             e.printStackTrace();
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> updateProduct(Map<String, String> requestMap) {
+        try {
+            if (jwtFilter.isAdmin()){
+                if (validateProductMap(requestMap, false)){
+                    Optional<Product> optional = productDAO.findById(Integer.parseInt(requestMap.get("id")));
+                    if (optional.isPresent()){
+                        Product product = getProductFromMap(requestMap, true);
+                        product.setStatus(optional.get().getStatus());
+                        productDAO.save(product);
+                        return CafeUtils.getResponseEntity("Product update successfully.", HttpStatus.OK);
+                    }
+                    else return CafeUtils.getResponseEntity("Product does not exist.", HttpStatus.OK);
+                }
+                else return CafeUtils.getResponseEntity(CafeConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
+            }
+            else return CafeUtils.getResponseEntity(CafeConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 

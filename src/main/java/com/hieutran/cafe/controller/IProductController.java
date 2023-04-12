@@ -21,4 +21,7 @@ public interface IProductController {
     @GetMapping("/get")
     ResponseEntity<List<ProductDTO>> getAllProduct();
 
+    @PostMapping("/update")
+    ResponseEntity<String> updateProduct(@RequestBody Map<String, String> requestMap);
+
 }
