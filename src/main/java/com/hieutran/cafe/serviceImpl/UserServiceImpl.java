@@ -79,8 +79,8 @@ public class UserServiceImpl implements IUserService {
             if (auth.isAuthenticated()){
                 User user = customUserDetailService.getUserDetail();
                 if (user.getStatus().equalsIgnoreCase("true")){
-                    return new ResponseEntity<String>("{\"token\" : \"" +
-                            jwtUtils.generateToken(user.getEmail(), user.getRole()) + "\"}", HttpStatus.OK);
+                    return new ResponseEntity<String>("{\n\"token\" : \"" +
+                            jwtUtils.generateToken(user.getEmail(), user.getRole()) + "\"\n}", HttpStatus.OK);
                 }
                 else return new ResponseEntity<String>("{\"message\" : \"Wait for admin approval\"}", HttpStatus.BAD_REQUEST);
             }
