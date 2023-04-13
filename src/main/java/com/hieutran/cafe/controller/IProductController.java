@@ -2,7 +2,6 @@ package com.hieutran.cafe.controller;
 
 
 import com.hieutran.cafe.DTO.ProductDTO;
-import com.hieutran.cafe.model.Product;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,5 +25,8 @@ public interface IProductController {
 
     @PostMapping("/updateStatus")
     ResponseEntity<String> updateStatus(@RequestBody Map<String, String> requestMap);
+
+    @GetMapping("getByCategory/{id}")
+    ResponseEntity<List<ProductDTO>> getByCategory(@PathVariable Integer id);
 
 }
