@@ -77,6 +77,41 @@ public class ProductServiceImpl implements IProductService {
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
+    public ResponseEntity<String> deleteProduct(Integer id) {
+        try {
+            if (jwtFilter.isAdmin()){
+                Optional<Product> optional = productDAO.findById(id);
+                if (optional.isPresent()){
+                    productDAO.deleteById(id);
+                    return CafeUtils.getResponseEntity("Product deleted successfully.", HttpStatus.OK);
+                }
+                else return CafeUtils.getResponseEntity("Product does not exist.", HttpStatus.OK);
+            }
+            else return CafeUtils.getResponseEntity(CafeConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> updateStatus(Map<String, String> requestMap) {
+        try {
+            if (jwtFilter.isAdmin()){
+                Optional<Product> optional = productDAO.findById(Integer.parseInt(requestMap.get("id")));
+                if (optional.isPresent()){
+                    productDAO.updateProductStatus(requestMap.get("status"), Integer.parseInt(requestMap.get("id")));
+                    return CafeUtils.getResponseEntity("Update status successfully.", HttpStatus.OK);
+                }
+                else return CafeUtils.getResponseEntity("Product does not exist.", HttpStatus.OK);
+            }
+            else return CafeUtils.getResponseEntity(CafeConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WENT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     /*==================================================================================================
                                PRIVATE FUNCTIONS
