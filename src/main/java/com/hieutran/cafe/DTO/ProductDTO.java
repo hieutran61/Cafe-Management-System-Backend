@@ -27,6 +27,13 @@ public class ProductDTO {
         this.name = name;
     }
 
+    public ProductDTO(Integer id, String name, String description, Integer price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
     private Integer id;
     private String name;
     private String description;

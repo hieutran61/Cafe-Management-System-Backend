@@ -79,4 +79,14 @@ public class ProductControllerImpl implements IProductController {
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @Override
+    public ResponseEntity<ProductDTO> getProducById(Integer id) {
+        try {
+            return productService.getProductById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(new ProductDTO(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

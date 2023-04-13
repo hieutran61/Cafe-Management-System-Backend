@@ -123,6 +123,16 @@ public class ProductServiceImpl implements IProductService {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR );
     }
 
+    @Override
+    public ResponseEntity<ProductDTO> getProductById(Integer id) {
+        try {
+            return new ResponseEntity<>(productDAO.getProductById(id), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(new ProductDTO(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     /*==================================================================================================
                                PRIVATE FUNCTIONS
     ==================================================================================================*/

@@ -26,7 +26,10 @@ public interface IProductController {
     @PostMapping("/updateStatus")
     ResponseEntity<String> updateStatus(@RequestBody Map<String, String> requestMap);
 
-    @GetMapping("getByCategory/{id}")
+    @GetMapping("/getByCategory/{id}")
     ResponseEntity<List<ProductDTO>> getByCategory(@PathVariable Integer id);
+
+    @GetMapping("/getById/{id}")
+    ResponseEntity<ProductDTO> getProducById(@PathVariable Integer id);
 
 }
